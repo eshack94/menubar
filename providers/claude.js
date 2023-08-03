@@ -42,8 +42,26 @@ class Claude extends Provider {
           margin: 0 !important;
         }
         `);
-			}, 1000);
+			}, 100);
 		});
+	}
+
+	static toggleDarkMode() {
+		if (isDarkMode) {
+			this.getWebview().insertCSS(`
+				body {
+					background-color: #1d1d1d !important;
+					filter: invert(100%) hue-rotate(180deg);
+				}
+			`);
+		} else {
+			this.getWebview().insertCSS(`
+				body {
+					background-color: #ffffff !important;
+					filter: none;
+				}
+			`);
+		}
 	}
 
 	static isEnabled() {

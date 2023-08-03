@@ -34,9 +34,6 @@ class HuggingChat extends Provider {
 			// hide message below text input, sidebar, suggestions on new chat
 			setTimeout(() => {
 				this.getWebview().executeJavaScript(`
-          // Add Dark Mode
-          document.documentElement.classList.add('dark');
-
           // Hide Examples Box
           var elements = Array.from(document.querySelectorAll('div[class]'));
           var targetElement;
@@ -78,7 +75,7 @@ class HuggingChat extends Provider {
 	}
 
 	static isEnabled() {
-		return store.get(`${this.webviewId}Enabled`, false);
+		return store.get(`${this.webviewId}Enabled`, true);
 	}
 }
 

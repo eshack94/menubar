@@ -33,6 +33,7 @@ const providers = {
 	Bing: require('./providers/bing'),
 	Claude: require('./providers/claude'),
 	Claude2: require('./providers/claude2'),
+	Together: require('./providers/together'),
 	Perplexity: require('./providers/perplexity'),
 	Phind: require('./providers/phind'),
 	HuggingChat: require('./providers/huggingchat'),
@@ -54,9 +55,6 @@ if (process.env.NODE_ENV === 'development') {
 	store.clear(); // reset to defaults when in dev
 }
 log.info('store reset', store); // Logging the store
-
-// Initialize fullscreen toggle
-store.set('isFullscreen', false);
 
 // Context menu for electron apps
 const contextMenu = require('electron-context-menu');
@@ -88,7 +86,7 @@ app.on('ready', () => {
 				enableWebView: true, // from chatgpt
 				// nativeWindowOpen: true,
 			},
-			width: store.get('isFullscreen', false) ? width : 1200,
+			width: 1200,
 			height: 750,
 		},
 		tray,
@@ -97,6 +95,22 @@ app.on('ready', () => {
 		showDockIcon: false,
 		icon: image,
 	});
+
+	// Flag to detect if the window was hidden manually
+	let manualHide = false;
+
+	// Prevent window from hiding when in development mode if not hidden manually
+	// (for debugging)
+	if (process.env.NODE_ENV === 'development') {
+		const originalHideWindow = mb.hideWindow.bind(mb);
+
+		mb.hideWindow = () => {
+			if (manualHide) {
+				manualHide = false; // Reset the flag
+				originalHideWindow(); // Call the original hideWindow method
+			}
+		};
+	}
 
 	// On menubar ready, the following code will execute
 	mb.on('ready', () => {
@@ -175,15 +189,6 @@ app.on('ready', () => {
 						});
 					},
 				},
-				{
-					label: 'Toggle Fullscreen',
-					accelerator: 'CommandorControl+Shift+F',
-					type: 'checkbox',
-					checked: store.get('isFullscreen', false),
-					click: () => {
-						store.set('isFullscreen', !store.get('isFullscreen', false));
-					},
-				},
 			];
 
 			const darkModeToggle = {
@@ -258,6 +263,16 @@ app.on('ready', () => {
 				},
 			];
 
+			// FYI to the user that they are in development mode
+			if (process.env.NODE_ENV === 'development') {
+				menuHeader.unshift(
+					{
+						label: '👨‍💻 IN DEV MODE 👨‍💻',
+					},
+					separator,
+				);
+			}
+
 			// Return the complete context menu template
 			return [
 				...menuHeader,
@@ -284,12 +299,20 @@ app.on('ready', () => {
 			if (e.ctrlKey || e.metaKey) {
 				const contextMenuTemplate = createContextMenuTemplate();
 				mb.tray.popUpContextMenu(Menu.buildFromTemplate(contextMenuTemplate));
+			} else {
+				quickOpen();
 			}
 		});
+
+		tray.on('double-click', () => {
+			quickOpen();
+		});
+
 		const menu = new Menu();
 
 		function quickOpen() {
 			if (window.isVisible()) {
+				manualHide = true; // Honor manual hide in development mode
 				mb.hideWindow();
 			} else {
 				mb.showWindow();
@@ -317,18 +340,6 @@ app.on('ready', () => {
 			}
 		});
 
-		store.onDidChange('isFullscreen', (isFullscreen) => {
-			const { window } = mb;
-			if (isFullscreen) {
-				window.setBounds({ x: 0, width: width, height: window.getSize()[1] });
-			} else {
-				window.setBounds({
-					x: width - 1200,
-					width: 1200,
-					height: window.getSize()[1],
-				});
-			}
-		});
 		Menu.setApplicationMenu(menu, { autoHideMenuBar: false });
 
 		// open devtools if in dev mode

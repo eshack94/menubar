@@ -1,8 +1,8 @@
 # 👼 smol menubar
 
-This is a smol menubar app that helps you quickly access **the full webapps** of ChatGPT (defaults to "[GPT4.5](https://www.latent.space/p/code-interpreter#details)"!!), Perplexity.ai, Claude 2, and more (see below) with a single keyboard shortcut (Cmd+Shift+G).
+This is a smol menubar app that helps you quickly access **the full webapps** of ChatGPT (defaults to "[GPT4.5](https://www.latent.space/p/code-interpreter#details)"!!), Claude 2, Perplexity.ai, Phind and more (see below) with a single keyboard shortcut (Cmd+Shift+G).
 
-> we also support Bard, Bing, Claude 1, and local models like LLaMA and Vicuna (via [OobaBooga](https://github.com/oobabooga/text-generation-webui)) but hide by default bc they aren't as good!
+> we also support Bard, Bing, Phind, Together.ai, and local models like LLaMA and Vicuna (via [OobaBooga](https://github.com/oobabooga/text-generation-webui)) but hide by default bc they aren't as good!
 
 ![image](https://github.com/smol-ai/menubar/assets/6764957/0cc8f90a-b7eb-447c-808a-6883654dcad4)
 
@@ -14,7 +14,7 @@ Whatever is typed at the bottom is entered into all **web apps** simultaneously,
 
 Yes and no:
 
-1. SOTA functionality is often released without API (eg: ChatGPT Code Interpreter, Bing Image Creator, Bard Multimodal Input, Claude Multifile Upload). **We insist on using webapps** so that you have full access to all functionality on launch day.
+1. SOTA functionality is often released without API (eg: ChatGPT Code Interpreter, Bing Image Creator, Bard Multimodal Input, Claude Multifile Upload). **We insist on using webapps** so that you have full access to all functionality on launch day. We also made light/dark mode for each app, just for fun (`Cmd+Shift+L`)
 2. This is a menubar app that can be invoked with a keyboard shortcut (Cmd+Shift+G). Feels a LOT faster than having it live in a browser window somewhere and is easy to pull up/dismiss during long generations.
 3. Supports local models like LLaMa and Vicuna via [OobaBooga](https://github.com/oobabooga/text-generation-webui).
 4. No paywall, build from source.
@@ -24,16 +24,16 @@ Yes and no:
 | Provider (default in **bold**)                                                     | Status | Notes                                                                                                                                        |
 | ---------------------------------------------------------------------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------- |
 | **ChatGPT**                                                                        | ☑️     | Defaults to GPT 4 Code Interpreter                                                                                                           |
-| Bard                                                                               | ☑️     |                                                                                                                                              |
-| Bing                                                                               | ☑️     | [It's not the same as GPT-4!](https://twitter.com/jeremyphoward/status/1666593682676662272?s=20)                                             |
-| Claude                                                                             | ☑️     | Requires Beta Access                                                                                                                         |
 | **Claude 2**                                                                       | ☑️     | **Login Tip**: Use manual email login and remember to type (not paste) the login code! ([#56](https://github.com/smol-ai/menubar/issues/56)) |
-| Local Models (via [OobaBooga](https://github.com/oobabooga/text-generation-webui)) | ☑️     | Requires Local Setup                                                                                                                         |
 | **HuggingChat**                                                                    | ☑️     | Offers Llama2, OpenAssistant                                                                                                                 |
-| **Perplexity**                                                                     | ☑️     |                                                                                                                                              |
-| Phind                                                                              | ☑️     |                                                                                                                                              |
+| **Perplexity**                                                                     | ☑️     | Search + Chat                                                                                                                                |
+| **Bing**                                                                           | ☑️     | Microsoft's best. [It's not the same as GPT-4!](https://twitter.com/jeremyphoward/status/1666593682676662272?s=20)                           |
+| Bard                                                                               | ☑️     | Google's best. [Bard's updates are... flaky](https://twitter.com/swyx/status/1678495067663925248)                                            |
+| Local Models (via [OobaBooga](https://github.com/oobabooga/text-generation-webui)) | ☑️     | Requires Local Setup                                                                                                                         |
+| Phind                                                                              | ☑️     | Developer focused chat                                                                                                                       |
 | OpenAssistant                                                                      | ☐      | Coming Soon — [Submit a PR](https://github.com/smol-ai/menubar/issues/37)!                                                                   |
 | Quora Poe                                                                          | ☐      | Coming Soon — [Submit a PR](https://github.com/smol-ai/menubar/issues/38)!                                                                   |
+| Claude                                                                             | ☑️     | Requires Beta Access                                                                                                                         |
 | ... What's Else?                                                                   | ☐      | [Submit a New Issue](https://github.com/smol-ai/menubar/issues)!                                                                             |
 
 ## Features and Usage
@@ -45,6 +45,7 @@ Yes and no:
     - Quick Open
       - ![image](https://github.com/davej/smol-ai-menubar/assets/6764957/3a6d0a16-7f54-43e5-9060-ec7b2486d32d)
     - Submit can be toggled to use `Enter` (faster for quick chat replies) vs `Cmd+Enter` (easier to enter multiline prompts)
+  - `Cmd+Shift+L` to toggle light/dark mode (not customizable for now)
   - Remember you can customize further by building from source!
 
 - **Window Resizing**:
@@ -52,7 +53,6 @@ Yes and no:
   - Resize the window by clicking and dragging.
   - Use `Cmd+1/2/3/A/+/-` or drag to resize the internal webviews.
     - `Cmd +` and `Cmd -` are especially useful if you have a lot of chats enabled!
-  - Use `Cmd+Shift+F` to set the width to 100% of your screen.
 
 - **Model Toggle**:
 
